@@ -1,0 +1,274 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+//Front End
+Route::get('/',[
+    'uses'=>'LookCareController@index',
+    'as'=>'/'
+]);
+Route::get('/contact/us',[
+    'uses'=>'LookCareController@contactUs',
+    'as'=>'contact-us'
+]);
+Route::get('/category/product/{id}',[
+    'uses'=>'LookCareController@categoryProduct',
+    'as'=>'category-product'
+]);
+Route::get('/product/details/{id}/{categoryId}',[
+    'uses'=>'LookCareController@productDetails',
+    'as'=>'product-details'
+]);
+Route::get('/product/brand/{id}',[
+    'uses'=>'LookCareController@brandProduct',
+    'as'=>'brand-product'
+]);
+Route::post('/cart/add',[
+    'uses'=>'CartController@addToCart',
+    'as'=>'add-to-cart'
+]);
+Route::get('/cart/show',[
+    'uses'=>'CartController@showCart',
+    'as'=>'show-cart'
+]);
+Route::get('/cart/delete/{rowId}}',[
+    'uses'=>'CartController@deleteCartItem',
+    'as'=>'delete-cart-item'
+]);
+Route::post('/cart/update',[
+    'uses'=>'CartController@updateCartItem',
+    'as'=>'update_qty'
+]);
+Route::get('/checkout',[
+    'uses'=>'CheckoutController@index',
+    'as'=>'checkout'
+]);
+Route::post('/checkout/customer/signup',[
+    'uses'=>'CheckoutController@customerSignUp',
+    'as'=>'new-customer'
+]);
+Route::post('/checkout/customer/login',[
+    'uses'=>'CheckoutController@customerLoginCheck',
+    'as'=>'customer-login'
+]);
+Route::post('/checkout/customer/logout',[
+    'uses'=>'CheckoutController@customerLogout',
+    'as'=>'customer-logout'
+]);
+Route::get('/new-customer-login',[
+    'uses'=>'CheckoutController@newCustomerLogin',
+    'as'=>'new-customer-login'
+]);
+//new customer registered
+Route::post('/new/customer/signup',[
+    'uses'=>'CheckoutController@newCustomerSignUp',
+    'as'=>'new-customer-signup'
+]);
+//old customer
+Route::post('/old-customer-login',[
+    'uses'=>'CheckoutController@oldCustomerLogin',
+    'as'=>'old-customer'
+]);
+//shipping
+Route::get('/checkout/shipping',[
+    'uses'=>'CheckoutController@shippingForm',
+    'as'=>'checkout-shipping'
+]);
+Route::post('/checkout/shipping/save',[
+    'uses'=>'CheckoutController@saveshippingInfo',
+    'as'=>'new-shipping'
+]);
+Route::get('/checkout/payment',[
+    'uses'=>'CheckoutController@paymentForm',
+    'as'=>'checkout-payment'
+]);
+Route::post('/checkout/order',[
+    'uses'=>'CheckoutController@newOrder',
+    'as'=>'new-order'
+]);
+Route::get('/complete/order',[
+    'uses'=>'CheckoutController@completeOrder',
+    'as'=>'complete-order'
+]);
+//Product Search
+Route::GET('/search/results','SearchController@searchResult')->name('search-product');
+//Error Handling
+Route::get('/404','ErrorPageContoller@error404');
+Route::get('/405','ErrorPageContoller@error405');
+
+//Admin Panel
+Auth::routes();
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+
+//admin category
+Route::get('/category/add',[
+    'uses'=>'CategoryController@index',
+    'as'=>'add-category'
+]);
+Route::post('/category/save',[
+    'uses'=>'CategoryController@saveCategory',
+    'as'=>'new-category'
+]);
+Route::get('/category/manage',[
+    'uses'=>'CategoryController@manageCategory',
+    'as'=>'manage-category'
+]);
+Route::get('/category/unpublish/{id}',[
+    'uses'=>'CategoryController@unpublishCategory',
+    'as'=>'unpublish-category'
+]);
+Route::get('/category/publish/{id}',[
+    'uses'=>'CategoryController@publishCategory',
+    'as'=>'publish-category'
+]);
+Route::get('/category/edit/{id}',[
+    'uses'=>'CategoryController@editCategory',
+    'as'=>'edit-category'
+]);
+Route::post('/category/update',[
+    'uses'=>'CategoryController@updateCategory',
+    'as'=>'update-category'
+]);
+Route::get('/category/delete/{id}',[
+    'uses'=>'CategoryController@deleteCategory',
+    'as'=>'delete-category'
+]);
+//Brand
+Route::get('/brand/add',[
+    'uses'=>'BrandController@index',
+    'as'=>'add-brand'
+]);
+Route::post('/brand/save',[
+    'uses'=>'BrandController@saveBrand',
+    'as'=>'new-brand',
+    'middleware'=>'lookcare'//use for multiple middleware use array []
+]);
+Route::get('/brand/manage',[
+    'uses'=>'BrandController@manageBrand',
+    'as'=>'manage-brand'
+]);
+Route::get('/brand/unpublish/{id}',[
+    'uses'=>'BrandController@unpublishBrand',
+    'as'=>'unpublish-brand'
+]);
+Route::get('/brand/publish/{id}',[
+    'uses'=>'BrandController@publishBrand',
+    'as'=>'publish-brand'
+]);
+Route::get('/brand/edit/{id}',[
+    'uses'=>'BrandController@editBrand',
+    'as'=>'edit-brand'
+]);
+Route::post('/brand/update/',[
+    'uses'=>'BrandController@updateBrand',
+    'as'=>'update-brand'
+]);
+Route::get('/brand/delete/{id}',[
+    'uses'=>'BrandController@deleteBrand',
+    'as'=>'delete-brand'
+]);
+//Product
+Route::get('/product/add',[
+    'uses'=>'ProductController@index',
+    'as'=>'add-product'
+]);
+Route::post('/product/save',[
+    'uses'=>'ProductController@saveProduct',
+    'as'=>'new-product'
+]);
+Route::get('/product/manage',[
+    'uses'=>'ProductController@manageProduct',
+    'as'=>'manage-product'
+]);
+Route::get('/product/unpublish/{id}',[
+    'uses'=>'ProductController@unpublishProduct',
+    'as'=>'unpublish-product'
+]);
+Route::get('/product/publish/{id}',[
+    'uses'=>'ProductController@publishProduct',
+    'as'=>'publish-product'
+]);
+Route::get('/product/view/{id}',[
+    'uses'=>'ProductController@viewProduct',
+    'as'=>'view-product'
+]);
+Route::get('/product/edit/{id}',[
+    'uses'=>'ProductController@editProduct',
+    'as'=>'edit-product'
+]);
+Route::post('/product/update/',[
+    'uses'=>'ProductController@updateProduct',
+    'as'=>'update-product'
+]);
+Route::get('/product/delete/{id}',[
+    'uses'=>'ProductController@deleteProduct',
+    'as'=>'delete-product'
+]);
+//Slider
+Route::get('/slide/add',[
+    'uses'=>'SlideController@addSlide',
+    'as'=>'add-slide'
+]);
+Route::post('/slide/save',[
+    'uses'=>'SlideController@saveSliderInfo',
+    'as'=>'new-slider'
+]);
+Route::get('/slide/manage',[
+    'uses'=>'SlideController@manageSliderInfo',
+    'as'=>'manage-slide'
+]);
+Route::get('/slide/unpublish/{id}',[
+    'uses'=>'SlideController@unpublishedSliderInfo',
+    'as'=>'slider-unpublish'
+]);
+Route::get('/slide/publish/{id}',[
+    'uses'=>'SlideController@publishedSliderInfo',
+    'as'=>'slider-publish'
+]);
+Route::get('/slide/edit/{id}',[
+    'uses'=>'SlideController@editSliderInfo',
+    'as'=>'slider-edit'
+]);
+Route::post('/slide/update',[
+    'uses'=>'SlideController@updateSliderInfo',
+    'as'=>'slide-update'
+]);
+Route::get('/slide/delete/{id}',[
+    'uses'=>'SlideController@deleteSliderInfo',
+    'as'=>'slider-delete'
+]);
+//manage order
+Route::get('/order/manage-order',[
+    'uses'=>'OrderController@manageOrderInfo',
+    'as'=>'manage-order',
+]);
+Route::get('/order/view-order-detail/{order_id}',[
+    'uses'=>'OrderController@viewOrderDetail',
+    'as'=>'view-order-detail',
+]);
+Route::get('/order/view/invoice/{order_id}',[
+    'uses'=>'OrderController@viewInvoice',
+    'as'=>'view-invoice',
+]);
+Route::get('/order/download/order/invoice/{order_id}',[
+    'uses'=>'OrderController@downloadOrderInvoice',
+    'as'=>'download-order-invoice',
+]);
+Route::get('/order/edit/{order_id}',[
+    'uses'=>'OrderController@orderEdit',
+    'as'=>'edit-order',
+]);
+Route::post('/order/update',[
+    'uses'=>'OrderController@updateOrderInfo',
+    'as'=>'order-status-update',
+]);
+
+
